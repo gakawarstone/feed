@@ -1,5 +1,5 @@
-from parser import parse_feed
-from config import fg
+from .parser import parse_feed
+from .config import fg
 
 items = parse_feed('https://nitter.caioalonso.com/anthp86/rss')
 

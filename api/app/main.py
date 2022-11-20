@@ -1,9 +1,6 @@
-from fastapi import FastAPI, Response
-from generator import get_rss_feed
-
-app = FastAPI()
+from manage import get_app
 
 
-@app.route('/feed')
-def show_rss(request):
-    return Response(content=get_rss_feed(), media_type="application/xml")
+if __name__ == '__main__':
+    import uvicorn
+    uvicorn.run(get_app())

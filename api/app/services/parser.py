@@ -2,7 +2,7 @@ from rss_parser import Parser
 import requests
 from datetime import datetime
 
-from item import Item
+from .item import Item
 
 
 def parse_feed(url: str) -> list[Item]:
