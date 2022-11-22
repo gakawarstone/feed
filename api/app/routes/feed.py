@@ -1,6 +1,7 @@
 from fastapi import Response, Request
-from services.generator import get_rss_feed
+from services.generator.rss_feed_generator import FeedGenerator
 
 
 def show_rss(request: Request):
-    return Response(content=get_rss_feed(), media_type="application/xml")
+    content = FeedGenerator.get_rss_feed()
+    return Response(content=content, media_type="application/xml")
