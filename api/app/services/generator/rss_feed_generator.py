@@ -34,4 +34,4 @@ class FeedGenerator:
         fe.title(item.title)
         fe.content(item.text)
         fe.pubDate(item.date)
-        fe.link(href='http://example.com', rel='alternate')
+        fe.link(href=item.link, rel='alternate')
