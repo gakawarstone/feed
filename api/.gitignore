@@ -1,2 +1,5 @@
 **/*.pyc
 sources
+**/__pycache__
+.venv
+sources.toml
