@@ -22,6 +22,7 @@ _constant_datetime = datetime.combine(
 class RezkaShowFeedParser(RssFeedParser):
     @classmethod
     def parse_show(cls, show_url: str) -> list[Item]:
+        print('parsing show: ' + show_url)
         return [
             Item(
                 title=cls.get_rezka_show_status(show_url),

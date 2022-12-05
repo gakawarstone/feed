@@ -9,5 +9,5 @@ class TiktokFeedParser(RssFeedParser):
 
     @classmethod
     def parse_by_username(cls, user_name: str) -> list[Item]:
-        logger.warning("parsing tiktok username " + user_name)
+        logger.warning("parsing tiktok: @" + user_name)
         return cls.parse_from_url(cls.__base_url + user_name)
