@@ -1,7 +1,17 @@
-import tomllib
+import os
 
-SOURCES_LIST = [s.strip() for s in open('sources')]
+from dotenv import load_dotenv
 
-with open('sources.toml') as f:
-    content = f.read()
-    SOURCES_DATA = tomllib.loads(content)
+
+load_dotenv()
+
+
+try:
+    DB_URL = os.environ['DB_URL']
+except ValueError:
+    raise ValueError('Missing configuration')
+
+
+MODELS = [
+    'app.models.feed',
+]

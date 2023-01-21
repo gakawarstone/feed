@@ -9,6 +9,7 @@ rss-parser = "*"
 feedgen = "*"
 fastapi = "*"
 uvicorn = {extras = ["standard"], version = "*"}
+tortoise-orm = "*"
 
 [dev-packages]
 flake8 = "*"
@@ -17,6 +18,7 @@ pre-commit = "*"
 
 [scripts]
 server = 'python app/main.py'
+dev = 'uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload'
 
 [requires]
 python_version = "3.11"

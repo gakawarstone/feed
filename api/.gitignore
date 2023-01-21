@@ -3,3 +3,6 @@ sources
 **/__pycache__
 .venv
 sources.toml
+.env
+cache_directory/
+**/*.sqlite*
