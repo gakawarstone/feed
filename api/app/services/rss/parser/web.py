@@ -1,4 +1,3 @@
-import requests
 import logging
 
 from requests.exceptions import ConnectionError
@@ -7,11 +6,11 @@ from rss_parser.models import FeedItem
 
 from app.utils.item_converter import convert_item
 from app.serializers.feed import Item
-from ._base import BaseFeed as _BaseFeed
+from ._parser import WebParser
 from ..exceptions import UnavailableFeed
 
 
-class WebFeed(_BaseFeed):
+class WebFeed(WebParser):
     @property
     async def items(self) -> list[Item]:
         try:
@@ -27,10 +26,8 @@ class WebFeed(_BaseFeed):
         ]
 
     async def __get_feed_from_url(self, url: str) -> list[FeedItem]:
-        logging.warning('making request to ' + url)
         try:
-            xml = requests.get(url).content
-            return Parser(xml).parse().feed
+            return Parser(self.html).parse().feed
         except ConnectionError:
             raise UnavailableFeed(self.feed.url)
         except AttributeError:

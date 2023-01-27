@@ -1,8 +1,15 @@
 from abc import ABC
-import requests
 from bs4 import BeautifulSoup
+import logging
+from datetime import timedelta
 
+import requests
+
+from app.services.cache.temporary import (
+    TemporaryCacheService, UndefinedCache, ExpiredCache)
+from app.services.cache.storage.memory import MemoryStorage
 from ._base import BaseFeed as _BaseFeed
+
 
 _headers = {
     "User-Agent": (
@@ -17,11 +24,20 @@ _headers = {
 
 class WebParser(_BaseFeed, ABC):
     headers = _headers
-    __cache: dict[str, BeautifulSoup] = {}
+    _cache_storage_time = timedelta(minutes=5)
+    __cache: TemporaryCacheService[bytes] = TemporaryCacheService(
+        storage=MemoryStorage()
+    )
 
     @property
     def html(self) -> bytes:
-        return requests.get(self.feed.url, headers=self.headers).content
+        try:
+            html = self.__cache.get(self.feed.url)
+        except (UndefinedCache, ExpiredCache):
+            logging.warning('making request to ' + self.feed.url)
+            html = requests.get(self.feed.url, headers=self.headers).content
+            self.__cache.set(self.feed.url, html, self._cache_storage_time)
+        return html
 
     @property
     def soup(self) -> BeautifulSoup:
