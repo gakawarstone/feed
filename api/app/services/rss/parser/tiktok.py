@@ -4,7 +4,6 @@ from .web import WebFeed
 
 
 class TikTokFeed(WebFeed):
-    # __base_url = "https://rsshub.app/tiktok/user/@"
     __base_url = 'https://tok.adminforge.de'
 
     @property
