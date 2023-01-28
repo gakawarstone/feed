@@ -11,13 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: test
+      - name: Deploy with SSH
         uses: fifsky/ssh-action@master
         with:
           command: |
-            kill -9 $(pgrep -f feed) || echo "Feed isn't running"
             cd github/gakawarstone/feed/api
-            ls
             git fetch && git pull
             pipenv install
           host: ${{ secrets.HOST }}
