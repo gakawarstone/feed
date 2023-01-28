@@ -11,12 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: ls -a via ssh
+      - name: test
         uses: fifsky/ssh-action@master
         with:
           command: |
-            cd /tmp
-            ls -a
+            echo "Hello" 
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USER }}
           key: ${{ secrets.PRIVATE_KEY}}
