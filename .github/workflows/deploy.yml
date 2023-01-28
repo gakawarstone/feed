@@ -1,0 +1,24 @@
+name: Deploy-Api
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy with SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        script: |
+          cd ${{ secrets.PROJECT_PATH }}/api
+          git fetch && git pull
+          pipenv install
+          pipenv run prod
+
