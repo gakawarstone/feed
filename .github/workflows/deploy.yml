@@ -8,17 +8,16 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Deploy with SSH
-      uses: appleboy/ssh-action@v0.1.7
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.PRIVATE_KEY }}
-        script: |
-          cd ${{ secrets.PROJECT_PATH }}/api
-          git fetch && git pull
-          pipenv install
-          pipenv run prod
+    - name: Set up SSH
+      run: |
+        echo "${{ secrets.PRIVATE_KEY }}" | tr -d '\r' > ssh.pem
+        chmod 600 ssh.pem
+        ssh-keyscan ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+
+    - name: Deploy
+      run: |
+        ssh -i ssh.pem ${{ secrets.USERNAME }}@${{ secrets.HOST }}
+        cd {{ secrets.PTOJECT_PATH }}/api
