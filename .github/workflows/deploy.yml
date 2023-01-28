@@ -11,13 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set up SSH
-      run: |
-        echo "${{ secrets.PRIVATE_KEY }}" | tr -d '\r' > ssh.pem
-        chmod 600 ssh.pem
-        ssh-keyscan ${{ secrets.HOST }} >> ~/.ssh/known_hosts
-
-    - name: Deploy
-      run: |
-        ssh -i ssh.pem ${{ secrets.USERNAME }}@${{ secrets.HOST }}
-        cd {{ secrets.PTOJECT_PATH }}/api
+      - name: ls -a via ssh
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            cd /tmp
+            ls -a
+          host: ${{ secrets.HOST }}
+          user: ${{ secretes.USER }}
+          key: ${{ secrets.PRIVATE_KEY}}
