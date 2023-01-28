@@ -15,8 +15,10 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            bash
-            echo "Hello" 
+            kill -9 $(pgrep -f feed) || echo "Feed isn't running"
+            cd {{ secrets.PROJECT_PATH }}/api
+            pipenv install
+            pipenv run prod
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USER_NAME }}
           key: ${{ secrets.PRIVATE_KEY}}
