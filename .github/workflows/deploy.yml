@@ -20,7 +20,8 @@ jobs:
             ls
             git fetch && git pull
             pipenv install
-            pipenv run prod
+            pipenv shell
+            nohup uvicorn app.main:app --host {{ secrets.HOST }} --port 8000 --reload &
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USER_NAME }}
           key: ${{ secrets.PRIVATE_KEY}}
