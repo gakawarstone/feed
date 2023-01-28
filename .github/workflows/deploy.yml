@@ -16,7 +16,9 @@ jobs:
         with:
           command: |
             kill -9 $(pgrep -f feed) || echo "Feed isn't running"
-            cd {{ secrets.PROJECT_PATH }}/api
+            cd {{ secrets.PROJECT_PATH }}
+            ls
+            git fetch && git pull
             pipenv install
             pipenv run prod
           host: ${{ secrets.HOST }}
