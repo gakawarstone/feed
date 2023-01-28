@@ -15,10 +15,9 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
+        private_key: ${{ secrets.PRIVATE_KEY }}
         script: |
           cd ${{ secrets.PROJECT_PATH }}/api
           git fetch && git pull
           pipenv install
           pipenv run prod
-
