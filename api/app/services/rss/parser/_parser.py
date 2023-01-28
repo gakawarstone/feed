@@ -29,16 +29,14 @@ class WebParser(_BaseFeed, ABC):
         storage=MemoryStorage()
     )
 
-    @property
-    def html(self) -> bytes:
+    def get_html(self, url: str) -> bytes:
         try:
-            html = self.__cache.get(self.feed.url)
+            html = self.__cache.get(url)
         except (UndefinedCache, ExpiredCache):
-            logging.warning('making request to ' + self.feed.url)
-            html = requests.get(self.feed.url, headers=self.headers).content
-            self.__cache.set(self.feed.url, html, self._cache_storage_time)
+            logging.warning('making request to ' + url)
+            html = requests.get(url, headers=self.headers).content
+            self.__cache.set(url, html, self._cache_storage_time)
         return html
 
-    @property
-    def soup(self) -> BeautifulSoup:
-        return BeautifulSoup(self.html, 'html.parser')
+    def get_soup(self, url: str) -> BeautifulSoup:
+        return BeautifulSoup(self.get_html(url), 'html.parser')

@@ -1,5 +1,4 @@
 import logging
-import requests
 
 from requests.exceptions import ConnectionError
 from rss_parser import Parser
@@ -28,7 +27,7 @@ class WebFeed(WebParser):
 
     async def __get_feed_from_url(self, url: str) -> list[FeedItem]:
         try:
-            html = requests.get(url).content
+            html = self.get_html(url)
             return Parser(html).parse().feed
         except ConnectionError:
             raise UnavailableFeed(url)
