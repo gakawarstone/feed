@@ -17,5 +17,5 @@ jobs:
           command: |
             echo "Hello" 
           host: ${{ secrets.HOST }}
-          user: ${{ secrets.USER }}
+          user: ${{ secrets.USER_NAME }}
           key: ${{ secrets.PRIVATE_KEY}}
