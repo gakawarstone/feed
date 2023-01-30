@@ -5,12 +5,14 @@ from .web import WebFeed
 from .tiktok import TikTokFeed
 from ._base import TFeedParser
 from .kinogo import KinogoFeed
+from .twitch import TwitchFeed
 
 
 _PARSERS: dict[str, Type[TFeedParser]] = {
     'web': WebFeed,
     'tiktok': TikTokFeed,
     'kinogo': KinogoFeed,
+    'twitch': TwitchFeed
 }
 
 

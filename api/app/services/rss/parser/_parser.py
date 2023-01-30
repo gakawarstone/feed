@@ -20,8 +20,6 @@ _headers = {
 }
 
 
-# TODO: cache soup for constant time (example hour) or manually set
-
 class WebParser(_BaseFeed, ABC):
     headers = _headers
     _cache_storage_time = timedelta(minutes=5)
