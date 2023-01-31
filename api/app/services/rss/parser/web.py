@@ -15,8 +15,8 @@ class WebFeed(WebParser):
     async def items(self) -> list[Item]:
         try:
             return await self._get_items_from_web(self.feed.url)
-        except (UnavailableFeed, ValueError) as e:
-            logging.exception(e)
+        except (UnavailableFeed, ValueError):
+            logging.warning("Failed to parse: " + self.feed.url)
             return []
 
     async def _get_items_from_web(self, url: str) -> list[Item]:
