@@ -1,6 +1,5 @@
 from abc import ABC
 from bs4 import BeautifulSoup
-import logging
 from datetime import timedelta
 
 import requests
@@ -31,7 +30,6 @@ class WebParser(_BaseFeed, ABC):
         try:
             html = self.__cache.get(url)
         except (UndefinedCache, ExpiredCache):
-            logging.warning('making request to ' + url)
             html = requests.get(url, headers=self.headers).content
             self.__cache.set(url, html, self._cache_storage_time)
         return html
