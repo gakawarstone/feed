@@ -8,7 +8,7 @@ _T = TypeVar('_T')
 
 
 class ExpiredCache(Exception):
-    """Cache has allready expired"""
+    """Cache has already expired"""
 
 
 class UndefinedCache(Exception):
