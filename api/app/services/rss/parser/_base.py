@@ -14,4 +14,4 @@ class BaseFeed:
         pass
 
 
-TFeedParser = TypeVar("TFeedParser", bound=BaseFeed)
+TFeedParser = TypeVar("TFeedParser", bound=BaseFeed)  # FIXME: deprecated
