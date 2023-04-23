@@ -1,11 +1,12 @@
 from typing import Type
 
 from app.serializers.feed import Feed, Item
+from ._base import BaseFeed
 from .web import WebFeed
 from .tiktok import TikTokFeed
 from .kinogo import KinogoFeed
 from .twitch import TwitchFeed
-from ._base import BaseFeed
+from .yummyanime import YummyAnimeFeed
 
 
 _PARSERS: dict[str, Type[BaseFeed]] = {
@@ -13,6 +14,7 @@ _PARSERS: dict[str, Type[BaseFeed]] = {
     'tiktok': TikTokFeed,
     'kinogo': KinogoFeed,
     'twitch': TwitchFeed,
+    'yummyanime': YummyAnimeFeed,
 }
 
 
