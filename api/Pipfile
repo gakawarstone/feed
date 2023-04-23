@@ -10,13 +10,13 @@ feedgen = "*"
 fastapi = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 tortoise-orm = "*"
-ruff = "*"
 
 [dev-packages]
 flake8 = "*"
 autopep8 = "*"
 pre-commit = "*"
 pytest = "*"
+ruff = "*"
 
 [scripts]
 prod = 'python app/main.py' 
