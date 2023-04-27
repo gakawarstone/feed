@@ -7,6 +7,7 @@ from .tiktok import TikTokFeed
 from .kinogo import KinogoFeed
 from .twitch import TwitchFeed
 from .yummyanime import YummyAnimeFeed
+from .shiki import ShikiFeed
 
 
 _PARSERS: dict[str, Type[BaseFeed]] = {
@@ -15,6 +16,7 @@ _PARSERS: dict[str, Type[BaseFeed]] = {
     'kinogo': KinogoFeed,
     'twitch': TwitchFeed,
     'yummyanime': YummyAnimeFeed,
+    'shiki': ShikiFeed,
 }
 
 
