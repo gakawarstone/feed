@@ -48,8 +48,9 @@ class RedditFeed(WebParser):
                 text += p.text
 
             if not text:
-                return self._get_post_title(post)
-            return text
+                text = self._get_post_title(post)
+
+            return text + '<br/><br/>r/' + self.feed.url.split('/')[-1]
         except IndexError:
             raise ValueError
 
