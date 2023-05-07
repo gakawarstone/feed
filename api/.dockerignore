@@ -2,7 +2,7 @@
 cache_directory
 .idea
 .vscode
-.ruff_cache
-.mypy_cache 
-.pytest_cache
+**/.mypy_cache
+**/.pytest_cache
+**/.ruff_cache/
 
