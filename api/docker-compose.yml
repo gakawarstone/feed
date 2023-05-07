@@ -1,0 +1,14 @@
+version: '3'
+services:
+  gkfeed:
+    build:
+      context: .
+    volumes:
+      - gkfeed_data:/data
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    container_name: gkfeed
+volumes:
+  gkfeed_data:
