@@ -22,6 +22,8 @@ ruff = "*"
 prod = 'python app/main.py' 
 dev = 'uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload'
 test = 'pytest'
+lock = "sh -c 'pipenv -q requirements > requirements.txt'"
+lock-dev = "sh -c 'pipenv -q requirements --dev > requirements-dev.txt'"
 
 [requires]
 python_version = "3.11"
