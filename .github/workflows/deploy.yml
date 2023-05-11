@@ -12,7 +12,7 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            cd github/gakawarstone/feed/api
+            cd ${{ secrets.PROJECT_PATH}}
             pipenv run gitup
             pipenv run drestart
           host: ${{ secrets.HOST }}
