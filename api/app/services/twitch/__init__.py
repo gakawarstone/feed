@@ -28,6 +28,10 @@ class Twitch:
 
         url = cls.__base_url + streamer_name
         response = requests.get(url, headers=headers)
+
+        if 'data' not in response.json():
+            return None
+
         stream_data = response.json()['data']
 
         if len(stream_data) != 1:
