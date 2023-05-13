@@ -39,7 +39,13 @@ class VkFeed(WebParser):
 
     def _get_post_text(self, post: Tag) -> str:
         try:
-            return post.find_all(class_='wall_post_text')[0].text
+            if item := post.find(class_='wall_post_text'):
+                return item.text
+
+            if item := post.find(class_='post_video_title'):
+                return item.text
+
+            return post.find_all(class_='PostHeaderTitle__authorName')[0].text
         except IndexError:
             raise ValueError
 
@@ -68,10 +74,7 @@ class VkFeed(WebParser):
 
     def _get_post_link(self, post: Tag) -> str:
         try:
-            link = post.find_all(class_='post_link')[0]['href']
-            if not link.startswith('https'):
-                link = 'https://vk.com' + link
-            link = link.split('?')[0]
+            link = 'https://vk.com/wall' + post['id'][4:]
             return link
         except IndexError:
             raise ValueError
