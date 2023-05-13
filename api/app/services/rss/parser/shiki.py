@@ -39,7 +39,6 @@ class ShikiFeed(WebParser):
 
     def _get_item_status(self, item: Tag) -> str:
         try:
-            print(type(item))
             return item.find_all('span')[1].text
         except IndexError:
             raise ValueError
