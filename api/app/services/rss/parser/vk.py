@@ -9,7 +9,7 @@ from ._parser import WebParser
 
 
 class VkFeed(WebParser):
-    _cache_storage_time = timedelta(seconds=1)
+    _cache_storage_time = timedelta(hours=1)
 
     @property
     async def items(self) -> list[Item]:
