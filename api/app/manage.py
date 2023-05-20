@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from tortoise import Tortoise
 
 from app.settings import DB_URL, MODELS
-from app import routes, models
+from app import routes, models, middlewares
 
 
 TASKS_ON_STARTUP = [
@@ -23,5 +23,6 @@ def get_app():
     app = FastAPI()
     app.add_event_handler('startup', _on_startup)
     app.add_event_handler('shutdown', _on_shutdown)
+    middlewares.setup(app)
     routes.setup(app)
     return app
