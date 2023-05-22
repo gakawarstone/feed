@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 
 class Feed(BaseModel):
+    id: int
     title: str
     url: str
     type: str

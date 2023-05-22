@@ -13,4 +13,4 @@ class FeedRepository:
 
     @classmethod
     async def _unserialize(cls, feed: _Feed) -> Feed:
-        return Feed(title=feed.title, url=feed.url, type=feed.type)
+        return Feed(id=feed.id, title=feed.title, url=feed.url, type=feed.type)
