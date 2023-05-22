@@ -4,9 +4,13 @@ from app.services.repositories.feed import FeedRepository
 from app.serializers.feed import Feed
 
 
-async def add_feed(feed: Feed):
-    await FeedRepository.create(feed)
+class _FeedInput(Feed):
+    id: None = None
+
+
+async def add_feed(feed: _FeedInput):
+    item = await FeedRepository.create(feed)
     return JSONResponse(content={
         'created': True,
-        'item': feed.dict(),
+        'item': item.dict(),
     })
