@@ -10,6 +10,7 @@ from .yummyanime import YummyAnimeFeed
 from .shiki import ShikiFeed
 from .reddit import RedditFeed
 from .vk import VkFeed
+from .youtube import YoutubeFeed
 
 
 _PARSERS: dict[str, Type[BaseFeed]] = {
@@ -21,6 +22,7 @@ _PARSERS: dict[str, Type[BaseFeed]] = {
     'shiki': ShikiFeed,
     'reddit': RedditFeed,
     'vk': VkFeed,
+    'yt': YoutubeFeed,
 }
 
 
