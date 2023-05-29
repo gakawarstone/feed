@@ -61,4 +61,6 @@ class YoutubeFeed(BaseFeed):
             with yt_dlp.YoutubeDL(self._ydl_opts) as ydl:
                 info = ydl.extract_info(url, download=False)
             self.__cache.set(url, info, self._cache_storage_time)
+        if not info:
+            raise ValueError
         return info
