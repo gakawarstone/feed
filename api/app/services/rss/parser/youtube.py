@@ -16,7 +16,7 @@ class YoutubeFeed(BaseFeed):
         storage=MemoryStorage()
     )
     _cache_storage_time = timedelta(hours=1)
-    _max_videos = 30
+    _max_videos = 5
     _ydl_opts = {
         'ignoreerrors': True,
         'quiet': True,
