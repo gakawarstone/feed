@@ -46,7 +46,7 @@ class YoutubeFeed(BaseFeed):
 
     @property
     def _channel_name(self) -> str:
-        info = self._get_page_info(self.feed.url)
+        info = self._get_page_info(self.feed.url + '/videos')
         return info['uploader']
 
     @property
