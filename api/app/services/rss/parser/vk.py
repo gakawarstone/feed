@@ -21,14 +21,14 @@ class VkFeed(WebParser):
                     date=self._get_post_datetime(p),
                     link=self._get_post_link(p),
                 )
-                for p in self._posts
+                for p in await self._posts
             ]
         except (UnavailableFeed, ValueError):
             return []
 
     @property
-    def _posts(self) -> list[Tag]:
-        soup = self.get_soup(self.feed.url)
+    async def _posts(self) -> list[Tag]:
+        soup = await self.get_soup(self.feed.url)
         return [p for p in soup.find_all(class_='post')]
 
     def _get_post_title(self, post: Tag) -> str:

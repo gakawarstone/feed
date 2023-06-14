@@ -2,37 +2,23 @@ from abc import ABC
 from bs4 import BeautifulSoup
 from datetime import timedelta
 
-import requests
-
-from app.services.cache.temporary import (
-    TemporaryCacheService, UndefinedCache, ExpiredCache)
-from app.services.cache.storage.memory import MemoryStorage
+from app.services.cache.use_temporary import (
+    UseTemporaryCacheServiceExtension, async_store_in_cache_for)
+from app.services.http import HttpService, HttpRequestError
+from app.services.rss.exceptions import UnavailableFeed
 from ._base import BaseFeed as _BaseFeed
 
 
-_headers = {
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
-        "AppleWebKit/537.36 (KHTML, like Gecko)"
-        "Chrome/106.0.0.0 Safari/537.36"
-    ),
-}
-
-
-class WebParser(_BaseFeed, ABC):
-    headers = _headers
+class WebParser(_BaseFeed, UseTemporaryCacheServiceExtension[bytes], ABC):
     _cache_storage_time = timedelta(minutes=5)
-    __cache: TemporaryCacheService[bytes] = TemporaryCacheService(
-        storage=MemoryStorage()
-    )
 
-    def get_html(self, url: str) -> bytes:
+    @async_store_in_cache_for(_cache_storage_time)
+    async def get_html(self, url: str) -> bytes:
         try:
-            html = self.__cache.get(url)
-        except (UndefinedCache, ExpiredCache):
-            html = requests.get(url, headers=self.headers).content
-            self.__cache.set(url, html, self._cache_storage_time)
-        return html
+            return await HttpService.get(url)
+        except HttpRequestError:
+            print('FAILED: ' + self.feed.type + ' : ' + self.feed.title)
+            raise UnavailableFeed(self.feed.url)
 
-    def get_soup(self, url: str) -> BeautifulSoup:
-        return BeautifulSoup(self.get_html(url), 'html.parser')
+    async def get_soup(self, url: str) -> BeautifulSoup:
+        return BeautifulSoup(await self.get_html(url), 'html.parser')

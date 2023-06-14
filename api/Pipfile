@@ -5,12 +5,13 @@ name = "pypi"
 
 [packages]
 requests = "*"
-rss-parser = "*"
+rss-parser = "==0.2.4" # FIXME: new version
 feedgen = "*"
 fastapi = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 tortoise-orm = "*"
 yt-dlp = "*"
+aiohttp = "*"
 
 [dev-packages]
 flake8 = "*"

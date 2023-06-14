@@ -22,15 +22,15 @@ class RedditFeed(WebParser):
                     date=self._get_post_datetime(p),
                     link=self._get_post_link(p),
                 )
-                for p in self._posts
+                for p in await self._posts
             ]
         except (UnavailableFeed, ValueError):
             return []
 
     @property
-    def _posts(self) -> list[Tag]:
+    async def _posts(self) -> list[Tag]:
         url = self.__base_url + '/'.join(self.feed.url.split('/')[3:])
-        soup = self.get_soup(url)
+        soup = await self.get_soup(url)
         return [p for p in soup.find_all(class_='post')]
 
     def _get_post_title(self, post: Tag) -> str:

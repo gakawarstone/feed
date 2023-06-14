@@ -14,12 +14,13 @@ class ShikiFeed(WebParser):
     @property
     async def items(self) -> list[Item]:
         try:
-            soup = self.get_soup(self.feed.url)
+            soup = await self.get_soup(self.feed.url)
+            title = await self._show_title
             news = soup.find_all(
                 class_='b-menu-links')[0].find_all(class_='entry')
             return [
                 Item(
-                    title=self._show_title + ' ' + self._get_item_status(item),
+                    title=title + ' ' + self._get_item_status(item),
                     text=self._get_item_status(item),
                     date=self._get_item_date(item),
                     link=self.feed.url,
@@ -30,9 +31,9 @@ class ShikiFeed(WebParser):
             return []
 
     @property
-    def _show_title(self) -> str:
+    async def _show_title(self) -> str:
         try:
-            soup = self.get_soup(self.feed.url)
+            soup = await self.get_soup(self.feed.url)
             return soup.find_all('h1')[0].text
         except IndexError:
             raise ValueError

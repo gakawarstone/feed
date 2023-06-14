@@ -1,6 +1,5 @@
 import logging
 
-from requests.exceptions import ConnectionError
 from rss_parser import Parser
 from rss_parser.models import FeedItem
 
@@ -27,12 +26,7 @@ class WebFeed(WebParser):
 
     async def __get_feed_from_url(self, url: str) -> list[FeedItem]:
         try:
-            html = self.get_html(url)
+            html = await self.get_html(url)
             return Parser(html).parse().feed
-        except ConnectionError:
-            raise UnavailableFeed(url)
         except AttributeError:
-            raise ValueError(
-                'There is no rss on this page (possible parser protection): ' +
-                url
-            )
+            raise ValueError
