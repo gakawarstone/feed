@@ -3,10 +3,12 @@ from tortoise import Tortoise
 
 from app.settings import DB_URL, MODELS
 from app import routes, models, middlewares
+from app.services.rss.supervisor import FeedsSupervisor
 
 
 TASKS_ON_STARTUP = [
     models.setup(DB_URL, MODELS),
+    FeedsSupervisor.on_startup(),
 ]
 
 

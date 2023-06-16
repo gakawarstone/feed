@@ -2,6 +2,7 @@ from app.models.feed import Feed as _Feed
 from app.serializers.feed import Feed
 
 
+# NOTE: SubsRepository?
 class FeedRepository:
     @classmethod
     async def create(cls, item: Feed) -> Feed:

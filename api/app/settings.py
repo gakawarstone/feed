@@ -18,4 +18,5 @@ except ValueError:
 
 MODELS = [
     'app.models.feed',
+    'app.models.item',
 ]

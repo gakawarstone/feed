@@ -1,4 +1,5 @@
-from app.services.http import HttpService
+from app.services.http import HttpService, HttpRequestError
+from .exceptions import TwitchAuthenticationFailed
 
 
 class TwitchAuthenticator:
@@ -12,5 +13,8 @@ class TwitchAuthenticator:
             "grant_type": 'client_credentials'
         }
 
-        response = await HttpService.post(cls.__base_url, body)
-        return response['access_token']
+        try:
+            response = await HttpService.post(cls.__base_url, body)
+            return response['access_token']
+        except HttpRequestError:
+            raise TwitchAuthenticationFailed

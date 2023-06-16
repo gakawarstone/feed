@@ -4,7 +4,7 @@ from fastapi import Response, Request
 
 from app.services.rss.generator.rss_feed_generator import FeedGenerator
 from app.services.repositories.feed import FeedRepository
-from app.services.rss.parser import FeedParser
+from app.services.repositories.item import ItemsRepository
 
 
 async def get_rss_feed(request: Request):
@@ -13,7 +13,7 @@ async def get_rss_feed(request: Request):
     tasks = []
     async with TaskGroup() as tg:
         for feed in feeds:
-            tasks.append(tg.create_task(FeedParser(feed).parse()))
+            tasks.append(tg.create_task(ItemsRepository(feed).get_all()))
 
     items = []
     for t in tasks:
