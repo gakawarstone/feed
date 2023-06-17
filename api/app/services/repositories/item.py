@@ -22,7 +22,7 @@ class ItemsRepository:
                 link=item.link
             )
 
-    def _serialize_item(model_item: _Item) -> Item:
+    def _serialize_item(self, model_item: _Item) -> Item:
         return Item(
             title=model_item.title,
             text=model_item.text,
