@@ -1,5 +1,6 @@
 import asyncio
 
+from app.serializers.feed import Feed
 from app.services.repositories.feed import FeedRepository
 from app.services.repositories.item import ItemsRepository
 from app.services.rss.parser import FeedParser
@@ -20,14 +21,16 @@ class FeedsSupervisor:
             print('DISPATCHER FAILED WITH ', e)
             await cls.__dispatcher()
 
-    @staticmethod
-    async def __fetch_all_feeds():
+    @classmethod
+    async def __fetch_all_feeds(cls):
         feeds = await FeedRepository.get_all()
 
         tasks = []
         async with asyncio.TaskGroup() as tg:
             for feed in feeds:
-                tasks.append(tg.create_task(FeedParser(feed).parse()))
+                tasks.append(tg.create_task(cls.__fetch_feed(feed)))
 
-        for n, task in enumerate(tasks):
-            await ItemsRepository(feeds[n]).add_items_to_feed(task.result())
+    @classmethod
+    async def __fetch_feed(cls, feed: Feed):
+        items = await FeedParser(feed).parse()
+        await ItemsRepository(feed).add_items_to_feed(items)
