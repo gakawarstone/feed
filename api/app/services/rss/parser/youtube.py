@@ -12,7 +12,8 @@ from ._base import BaseFeed
 
 
 class YoutubeFeed(BaseFeed, UseTemporaryCacheServiceExtension[dict]):
-    _cache_storage_time = timedelta(hours=1)
+    _channel_info_storage_time = timedelta(hours=1)
+    _video_info_storage_time = timedelta(weeks=1)
     _max_videos = 5
     _ydl_opts_tab = {
         'ignoreerrors': True,
@@ -54,13 +55,13 @@ class YoutubeFeed(BaseFeed, UseTemporaryCacheServiceExtension[dict]):
             return []
 
     async def _get_video_publish_date(self, video: dict) -> datetime:
-        if type(video['timestamp']) is not int:
-            info = await self._get_page_info(video['url'], self._ydl_opts_video)
-            date_str = info['upload_date']
-        else:
+        yesterday = datetime.today() - timedelta(days=1)
+        if video['timestamp'] and video['timestamp'] >= yesterday.timestamp():
             date_str = datetime.fromtimestamp(
                 video['timestamp']).strftime('%Y%m%d')
-        return convert_datetime(date_str)
+            return convert_datetime(date_str)
+        info = await self._get_video_info(video['url'])
+        return convert_datetime(info['upload_date'])
 
     @property
     async def _channel_name(self) -> str:
@@ -72,7 +73,11 @@ class YoutubeFeed(BaseFeed, UseTemporaryCacheServiceExtension[dict]):
         info = await self._get_page_info(self.feed.url + '/videos')
         return info['entries']
 
-    @async_store_in_cache_for(_cache_storage_time)
+    @async_store_in_cache_for(_video_info_storage_time)
+    async def _get_video_info(self, url: str) -> dict:
+        return await self._get_page_info(url, self._ydl_opts_video)
+
+    @async_store_in_cache_for(_channel_info_storage_time)
     @async_wrap
     def _get_page_info(self, url: str, opts: dict = _ydl_opts_tab) -> dict:
         with yt_dlp.YoutubeDL(opts) as ydl:
