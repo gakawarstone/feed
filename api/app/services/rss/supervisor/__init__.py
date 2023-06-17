@@ -18,6 +18,7 @@ class FeedsSupervisor:
                 await asyncio.sleep(60)
         except Exception as e:
             print('DISPATCHER FAILED WITH ', e)
+            await cls.__dispatcher()
 
     @staticmethod
     async def __fetch_all_feeds():
