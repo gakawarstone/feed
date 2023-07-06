@@ -12,6 +12,8 @@ uvicorn = {extras = ["standard"], version = "*"}
 tortoise-orm = "*"
 yt-dlp = "*"
 aiohttp = "*"
+redis = {extras = ["hiredis"], version = "*"}
+rq = "*"
 
 [dev-packages]
 flake8 = "*"
@@ -19,6 +21,8 @@ autopep8 = "*"
 pre-commit = "*"
 pytest = "*"
 ruff = "*"
+locust = "*"
+pytest-tornasync = "*"
 
 [scripts]
 prod = 'python app/main.py' 

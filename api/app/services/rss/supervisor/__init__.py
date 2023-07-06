@@ -25,10 +25,9 @@ class FeedsSupervisor:
     async def __fetch_all_feeds(cls):
         feeds = await FeedRepository.get_all()
 
-        tasks = []
         async with asyncio.TaskGroup() as tg:
             for feed in feeds:
-                tasks.append(tg.create_task(cls.__fetch_feed(feed)))
+                tg.create_task(cls.__fetch_feed(feed))
 
     @classmethod
     async def __fetch_feed(cls, feed: Feed):

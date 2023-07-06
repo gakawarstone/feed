@@ -15,5 +15,7 @@ COPY --from=builder /app/wheels /wheels
 RUN pip install --no-cache /wheels/*
 
 COPY ./app ./app
+COPY ./scripts/docker_cmd.sh ./run.sh
+RUN chmod +x ./run.sh
 
-CMD uvicorn app.main:app --host 0.0.0.0 --port 8000
+CMD ./run.sh

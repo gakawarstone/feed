@@ -27,7 +27,6 @@ class Twitch:
         headers = cls.__get_headers(cls.__client_id, access_token)
 
         url = cls.__base_url + streamer_name
-        # response = requests.get(url, headers=headers)
         response = await cls.get_html(url, headers)
 
         if 'data' not in response:
