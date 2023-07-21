@@ -1,0 +1,17 @@
+version: '3'
+services:
+  gkfeed-parser:
+    build:
+      context: .
+    volumes:
+      - gkfeed_data:/data
+    env_file:
+      - .env
+    container_name: gkfeed-parser
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    container_name: gkfeed-parser-redis
+volumes:
+  gkfeed_data:
